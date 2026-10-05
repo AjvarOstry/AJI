@@ -68,19 +68,19 @@ body {
 .bomber {
     z-index: 1;
     background-color: var(--bomber-color);
-    height: 80px;
+    height: calc(var(--bomb-size) / 3);
 
 }
 
 #a {
 
-    width: 240px;
+    width: var(--bomb-size);
 }
 
 #b {
-    width: 160px;
+    width: calc(var(--bomb-size) / 3 * 2);
 }
 
 #c {
-    width: 80px;
+    width: calc(var(--bomb-size) / 3);
 }
