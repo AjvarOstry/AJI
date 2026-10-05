@@ -1,0 +1,86 @@
+
+:root {
+    --bomb-size: 240px;
+
+    --bomber-color: #223;
+
+    --window-size: 50px;
+    --window-pos: 10%;
+    --window-color: azure;
+}
+
+body {
+    background-color: skyblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bomb {
+    position: absolute;
+
+    width: var(--bomb-size);
+    height: var(--bomb-size);
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%) rotateX(-25deg) rotateY(25deg) rotateZ(-10deg);
+}
+
+#window {
+
+    position: absolute;
+    z-index: 2;
+
+    background-color: var(--window-color);
+
+    width: var(--window-size);
+    height: var(--window-size);
+
+    left: var(--window-pos);
+    top: var(--window-pos);
+
+    border-radius: 40%;
+    border-bottom-right-radius: 20%;
+
+    
+}
+
+#window-cover {
+    position: absolute;
+    z-index: 3;
+
+    background-color: var(--bomber-color);
+
+    width: var(--window-size);
+    height: var(--window-size);
+
+    left: calc(var(--window-pos) + 3%);
+    top: calc(var(--window-pos) + 3%);
+
+    border-radius: 30% 60% 10% 60%;
+
+    box-shadow: 2px 2px 3px 1px #111;
+}
+    
+
+.bomber {
+    z-index: 1;
+    background-color: var(--bomber-color);
+    height: 80px;
+
+}
+
+#a {
+
+    width: 240px;
+}
+
+#b {
+    width: 160px;
+}
+
+#c {
+    width: 80px;
+}
