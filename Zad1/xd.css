@@ -16,6 +16,19 @@ body {
     align-items: center;
 }
 
+#sun {
+    position: absolute;
+
+    left: 10%;
+    top: 10%;
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 0 1000px 300px wheat;
+
+}
+
 #bomb {
     position: absolute;
 
