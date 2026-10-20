@@ -16,11 +16,13 @@
 
     <h1>Task 2 - Recipes</h1>
 
-    <input type="text" id="search" oninput="filter()">
+    <input type="text" id="search">
 
-    <select id="difficulty" onchange="filter()">
+    <select id="difficulty">
     </select>
-    <select id="cuisine" onchange="filter()"></select>
+    <select id="cuisine"></select>
+
+    <!-- <input type="range" id="slider" onchange="filter()" /> -->
 
     <input type="reset" onclick="reset()" value="RESET" />
 
@@ -38,8 +40,6 @@
         <tbody id="tab">
         </tbody>
     </table>
-
-    <h2>Raw data from Recipes API</h2>
 
 </div>
 

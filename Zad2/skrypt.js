@@ -1,15 +1,26 @@
 let recipes = [];
+let search, difficulty, cuisine;
 
-fetch("https://dummyjson.com/recipes")
-    .then(response => response.json())
-    .then(data => {
-        recipes = data.recipes;
-        
-        renderTable(recipes);
-        fillSelect("difficulty", recipe => recipe.difficulty);
-        fillSelect("cuisine", recipe => recipe.cuisine);
-    });
+document.addEventListener("DOMContentLoaded", e => {
+    fetch("https://dummyjson.com/recipes")
+        .then(response => response.json())
+        .then(data => {
+            recipes = data.recipes;
+            
+            renderTable(recipes);
+            fillSelect("difficulty", recipe => recipe.difficulty);
+            fillSelect("cuisine", recipe => recipe.cuisine);
+            
+        });
 
+    search = document.getElementById("search");
+    difficulty = document.getElementById("difficulty");
+    cuisine = document.getElementById("cuisine");
+
+    search.addEventListener("input", filter);
+    difficulty.addEventListener("change", filter);
+    cuisine.addEventListener("change", filter);
+});
 
 
     
@@ -47,18 +58,15 @@ function fillSelect(id, item) {
 }
 
 function filter() {
-    let search = document.getElementById("search").value.toLowerCase();
-    let diffopt = document.getElementById("difficulty").value;
-    let cus_opt = document.getElementById("cuisine").value;
 
     const fRecipes = recipes.filter( recipe => {
-        const name =  recipe.name.toLowerCase().includes(search);
+        const name =  recipe.name.toLowerCase().includes(search.value.toLowerCase());
 
-        const diff = (diffopt == "all") || recipe.difficulty.toLowerCase().includes(diffopt);
+        const diff = (difficulty.value == "all") || recipe.difficulty.toLowerCase().includes(difficulty.value);
 
-        const cuisine = (cus_opt == "all") || recipe.cuisine.toLowerCase().includes(cus_opt);
+        const cus = (cuisine.value == "all") || recipe.cuisine.toLowerCase().includes(cuisine.value);
 
-        return name && diff && cuisine;
+        return name && diff && cus;
     });
 
     renderTable(fRecipes);
