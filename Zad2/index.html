@@ -22,9 +22,14 @@
     </select>
     <select id="cuisine"></select>
 
-    <!-- <input type="range" id="slider" onchange="filter()" /> -->
+    <div>
+    <input type="range" id="slider" min="0" max="60"/>
+    <p id="range_val">60</p>
+    </div>
 
-    <input type="reset" onclick="reset()" value="RESET" />
+    <h2>Recipes found: <p id="found"></p></h2>
+
+    <input type="reset" value="RESET" id="reset" />
 
     <table class="table table-striped table-bordered">
         <thead>

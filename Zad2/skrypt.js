@@ -1,5 +1,5 @@
 let recipes = [];
-let search, difficulty, cuisine;
+let search, difficulty, cuisine, range, range_val, count, found;
 
 document.addEventListener("DOMContentLoaded", e => {
     fetch("https://dummyjson.com/recipes")
@@ -16,10 +16,20 @@ document.addEventListener("DOMContentLoaded", e => {
     search = document.getElementById("search");
     difficulty = document.getElementById("difficulty");
     cuisine = document.getElementById("cuisine");
+    range = document.getElementById("slider");
+    range_val = document.getElementById("range_val");
+    found = document.getElementById("found");
+
+    range.value = 60;
 
     search.addEventListener("input", filter);
     difficulty.addEventListener("change", filter);
     cuisine.addEventListener("change", filter);
+    range.addEventListener("change", e => {
+        range_val.textContent = range.value;
+        filter();
+    });
+    document.getElementById("reset").addEventListener("click", reset)
 });
 
 
@@ -27,6 +37,7 @@ document.addEventListener("DOMContentLoaded", e => {
 function renderTable(data) {
     let table = document.getElementById("tab");
     table.innerHTML = "";
+    count = 0;
 
     data.forEach(element => {
         const r = document.createElement("tr");
@@ -39,7 +50,10 @@ function renderTable(data) {
             <td>${element.rating}</td>
         `;
         table.appendChild(r);
+        count++;
     });
+
+    found.textContent = count;
 }
 
 function fillSelect(id, item) {
@@ -58,6 +72,7 @@ function fillSelect(id, item) {
 }
 
 function filter() {
+    count = 0
 
     const fRecipes = recipes.filter( recipe => {
         const name =  recipe.name.toLowerCase().includes(search.value.toLowerCase());
@@ -66,16 +81,20 @@ function filter() {
 
         const cus = (cuisine.value == "all") || recipe.cuisine.toLowerCase().includes(cuisine.value);
 
-        return name && diff && cus;
+        const ran = recipe.prepTimeMinutes < range.value;
+
+        return name && diff && cus && ran;
     });
 
     renderTable(fRecipes);
 }
 
 function reset() {
-    document.getElementById("search").value = "";
-    document.getElementById("difficulty").value = "all";
-    document.getElementById("cuisine").value = "all";
+    search.value = "";
+    difficulty.value = "all";
+    cuisine.value = "all";
+    range.value = 60;
+    range_val.textContent = 60;
 
     renderTable(recipes);
 }
