@@ -1,6 +1,8 @@
 
 let recipes = [];
 
+let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
 let search, difficulty, cuisine, range, range_val, count, found;
 
 document.addEventListener("DOMContentLoaded", e => {
@@ -50,7 +52,25 @@ function renderTable(data) {
             <td>${element.difficulty}</td>
             <td>${element.prepTimeMinutes}</td>
             <td>${element.rating}</td>
+            
         `;
+
+        if(favourites.includes(element.id)) {
+            r.innerHTML += `
+                <td> <i class="bi bi-heart-fill"></i> </td>
+            `;
+        } else {
+            r.innerHTML += `
+                <td> <i class="bi bi-heart"></i> </td>
+            `;
+        }
+
+        const heart = r.querySelector("i");
+        heart.addEventListener("click", () => {
+            toggleFav(element.id);
+            filter();
+        })
+
         table.appendChild(r);
         count++;
     });
@@ -99,4 +119,16 @@ function reset() {
     range_val.textContent = 60;
 
     renderTable(recipes);
+}
+
+function toggleFav(id) {
+
+    if(favourites.includes(id)) {
+        favourites = favourites.filter(f => f != id)
+    } else {
+        favourites.push(id);
+    }
+
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+
 }
