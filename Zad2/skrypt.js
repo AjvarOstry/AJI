@@ -1,4 +1,6 @@
+
 let recipes = [];
+
 let search, difficulty, cuisine, range, range_val, count, found;
 
 document.addEventListener("DOMContentLoaded", e => {
@@ -81,7 +83,7 @@ function filter() {
 
         const cus = (cuisine.value == "all") || recipe.cuisine.toLowerCase().includes(cuisine.value);
 
-        const ran = recipe.prepTimeMinutes < range.value;
+        const ran = recipe.prepTimeMinutes <= range.value;
 
         return name && diff && cus && ran;
     });
