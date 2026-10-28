@@ -65,11 +65,23 @@ function renderTable(data) {
             `;
         }
 
+
         const heart = r.querySelector("i");
-        heart.addEventListener("click", () => {
+
+        heart.addEventListener("click", e => {
+            // co by się details nie otwierało
+            e.stopPropagation();
+
             toggleFav(element.id);
             filter();
+            
         })
+
+
+        r.style.cursor = "pointer";
+        r.addEventListener("click", () => {
+            showDetailModal(element);
+        });
 
         table.appendChild(r);
         count++;
@@ -131,4 +143,27 @@ function toggleFav(id) {
 
     localStorage.setItem("favourites", JSON.stringify(favourites));
 
+}
+
+function showDetailModal(element) {
+
+    document.getElementById("modalTitle").textContent = element.name;
+
+    let content = "<h6>Ingredients</h6><ul>";
+
+    element.ingredients.forEach(i => {
+        content += `<li>${i}</li>`;
+    });
+
+    content += "</ul><h6>Instructions</h6><ol>";
+    element.instructions.forEach(step => {
+        content += `<li>${step}</li>`;
+    });
+
+    content += "</ol>";
+
+    document.getElementById("modalBody").innerHTML = content;
+
+    bootstrap.Modal.getOrCreateInstance(document.getElementById("recipeModal")).show();
+    
 }
