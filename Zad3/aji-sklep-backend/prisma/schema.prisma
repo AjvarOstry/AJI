@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model category {
+  category_id   String    @id @default(uuid(7)) @db.Uuid
+  name          String    @unique
+
+  products product[]
+}
+
+model order_status {
+  status_id    String    @id @default(uuid(7)) @db.Uuid
+  name         String    @unique
+
+  orders order[]
+}
+
+model product {
+  product_id    String    @id @default(uuid(7)) @db.Uuid
+  name          String
+  description   String
+  unit_price    Decimal   @db.Decimal(12, 2)
+  unit_weight   Decimal   @db.Decimal(12, 2)
+  category_id   String    @db.Uuid
+
+  category      category  @relation(fields: [category_id], references: [category_id])
+
+  order_items order_item[]
+}
+
+model order {
+  order_id          String    @id @default(uuid(7)) @db.Uuid
+  creation_date     DateTime  @db.Timestamptz(3)
+  confirmation_date DateTime? @db.Timestamptz(3)
+  order_status_id   String    @db.Uuid
+  user_name         String
+  user_email        String
+  user_phone_nr     String
+
+
+  status            order_status @relation(fields: [order_status_id], references: [status_id])   
+
+  items order_item[]   
+}
+
+model order_item {
+  item_id         String    @id @default(uuid(7)) @db.Uuid
+  order_id        String    @db.Uuid
+  product_id      String    @db.Uuid
+  quantity        Int
+  unit_price      Decimal   @db.Decimal(12, 2)
+
+  order       order @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+  product     product @relation(fields: [product_id], references: [product_id])
+}
