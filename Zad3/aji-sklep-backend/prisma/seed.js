@@ -1,6 +1,6 @@
 import { prisma } from "../src/lib/prisma.js";
-import { ORDER_STATUS } from "../src/domainmodel/orderStatus.js";
-import { CATEGORIES } from "../src/domainmodel/categories.js";
+import { ORDER_STATUS } from "../src/domainmodel/orderStatusesEnum.js";
+import { CATEGORIES } from "../src/domainmodel/categoriesEnum.js";
 
 async function main() {
   for (const name of Object.values(ORDER_STATUS)) {
